@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+    </body>
+</html>
+<script>
+    function computerPlay() {
+        let options = ['rock','paper','scissors'];
+        //return random from options array
+        return options[Math.floor(Math.random()*options.length)];
+    }
+
+
+    function playRound(playerSelection,computerSelection) {
+        //convert inputs to lowercase strings
+        //dont need to convert computer to lower because already lower case
+        let playerLower = playerSelection.toLowerCase();
+        let options = ['rock','paper','scissors'];
+
+        //check for valid user input
+        let valid = options.includes(playerLower);
+        //prompt player for new input until rock paper or scissors is entered
+        while (!valid) {
+            playerLower = (prompt("Not a valid guess, try again.","New Move")).toLowerCase();
+            valid = options.includes(playerLower);
+        }
+
+        //check for ties. 
+        //if tied, prompt user for new input and have computer re-roll
+        while (playerLower === computerSelection) {
+            playerLower = (prompt("Tie, play again:","New Move")).toLowerCase();
+            computerSelection = computerPlay();
+        }
+
+        //ans will be true if player wins else false
+        let ans =(
+            (playerLower == "rock" && computerSelection =="scissors") || 
+            (playerLower == "scissors" && computerSelection == "paper") || 
+            (playerLower == "paper" && computerSelection == "rock"));
+
+        //format punctuation beore returning string response
+        playerCap = playerLower.charAt(0).toUpperCase()+playerLower.slice(1);
+        computerCap = computerSelection.charAt(0).toUpperCase()+computerSelection.slice(1);
+        return (ans == true) ? `You win! ${playerCap} beats ${computerCap}.` : `You lose! ${computerCap} beats ${playerCap}.` 
+    }
+
+    function game() {
+        //begin with score of 0 and 5 turns
+        let score = 0;
+        let turns = 5;
+        //loop through 5 turns
+        while (turns > 0) {
+            let thisRound = playRound(prompt("New Round","Your move"),computerPlay());
+            //check the string result from playRound to verify win or loss
+            if (thisRound.charAt(4) === "w") {
+                //increment score if win
+                score += 1;
+                console.log(thisRound+" Score is: "+score);
+                //increment turns
+                turns -= 1;
+                console.log(turns+" turns remaining.");
+            } else {
+                console.log(thisRound+" Score is: "+score);
+                turns -= 1;
+                console.log(turns+" turns remaining.");
+            }
+        }
+        //log final score. Function otherwise returns undefined
+        console.log("Your total score after five rounds: "+score);   
+    }
+</script>
