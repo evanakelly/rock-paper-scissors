@@ -3,82 +3,37 @@
     <head>
         <meta charset="UTF-8">
         <title>Rock Paper Scissors</title>
+        <link rel="stylesheet" href="styles.css">
+        
     </head>
     <body>
-
-    <script>
-        function computerPlay() {
-            let options = ['rock','paper','scissors'];
-            //return random from options array
-            return options[Math.floor(Math.random()*options.length)];
-        }
-
-
-        function playRound(playerSelection,computerSelection) {
-            //convert inputs to lowercase strings
-            //dont need to convert computer to lower because already lower case
-            let playerLower = playerSelection.toLowerCase();
-            let options = ['rock','paper','scissors'];
-
-            //check for valid user input
-            let valid = options.includes(playerLower);
-            //prompt player for new input until rock paper or scissors is entered
-            while (!valid) {
-                playerLower = (prompt("Not a valid guess, try again.","New Move")).toLowerCase();
-                valid = options.includes(playerLower);
-            }
-
-            //check for ties. 
-            //if tied, prompt user for new input and have computer re-roll
-            while (playerLower === computerSelection) {
-                playerLower = (prompt("Tie, play again:","New Move")).toLowerCase();
-                computerSelection = computerPlay();
-            }
-
-            //ans will be true if player wins else false
-            let ans =(
-                (playerLower == "rock" && computerSelection =="scissors") || 
-                (playerLower == "scissors" && computerSelection == "paper") || 
-                (playerLower == "paper" && computerSelection == "rock"));
-
-            //format punctuation beore returning string response
-            playerCap = playerLower.charAt(0).toUpperCase()+playerLower.slice(1);
-            computerCap = computerSelection.charAt(0).toUpperCase()+computerSelection.slice(1);
-            return (ans == true) ? `You win! ${playerCap} beats ${computerCap}.` : `You lose! ${computerCap} beats ${playerCap}.` 
-        }
-
-        function game() {
-            //begin with score of 0 and 5 turns
-            alert("Let's play a game of rock paper scissors.")
-            alert("Who can score the most in five rounds?")
-            let score = 0;
-            let turns = 5;
-            //loop through 5 turns
-            while (turns > 0) {
-                let thisRound = playRound(prompt("New Round","Your move"),computerPlay());
-                //check the string result from playRound to verify win or loss
-                if (thisRound.charAt(4) === "w") {
-                    //increment score if win
-                    score += 1;
-                    alert(thisRound+" Score is: "+score);
-                    console.log(thisRound+" Score is: "+score);
-                    //increment turns
-                    turns -= 1;
-                    alert(turns+" turns remaining. ");
-                    console.log(turns+" turns remaining.");
-                } else {
-                    alert(thisRound+" Score is: "+score);
-                    console.log(thisRound+" Score is: "+score);
-                    turns -= 1;
-                    alert(turns+" turns remaining.");
-                    console.log(turns+" turns remaining.");
-                }
-            }
-            //log final score. Function otherwise returns undefined
-            alert("Your total score after five rounds: "+score);
-            console.log("Your total score after five rounds: "+score);   
-        }
-        game()
-    </script>
+        <main>
+            <h1>Rock Paper Scissors</h1>
+            <h2>Shoot!</h2>
+            <div id="scoreboard">
+                <div class="score" id="user-score">
+                    <p>User</p>
+                    <p id="unum">0</p>
+                </div>
+                <div class="score" id="computer-score">
+                    <p>Computer</p>
+                    <p id="cnum">0</p>
+                </div>
+            </div>
+            <div id="buttons">
+                <button class="input-button" id="rock">Rock</button>
+                <button class="input-button" id="paper">Paper</button>
+                <button class="input-button" id="scissors">Scissors</button>
+            </div>
+            <div id="commentary">Pick your play</div>
+            <div id="subcommentary"></div>
+            <div id="tally">
+                <p>Session Record:&nbsp; </p>
+                <p id="utally"> 0</p>
+                <p> - </p>
+                <p id="ctally">0</p>
+            </div>
+        </main>
+    <script src="script.js"></script>
     </body>
 </html> 
